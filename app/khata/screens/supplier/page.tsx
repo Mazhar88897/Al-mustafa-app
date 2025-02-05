@@ -36,7 +36,7 @@ export default function CustomerPage() {
           // setUserDataContext({ ...userData, accountId: accountData[0] });
           
           console.log("Accounts: total", accountData);  
-          accountData.forEach((item:ID )=> {
+          (accountData || []).forEach((item:ID )=> {
             if (item._id === AccountId) {
               setGlobalData(item); // Set item when the _id matches
               setselectedAccountId(item._id);
@@ -201,8 +201,8 @@ type Record = {
 let totalDebit = 0;
 let totalCredit = 0;
 
-(globalData.suppliers).forEach((record: Record) => {
-    record.amount.forEach((entry: Transaction) => {
+(globalData.suppliers || [] ).forEach((record: Record) => {
+    (record.amount || []).forEach((entry: Transaction) => {
         if (entry.amount.toLowerCase() === "i gave") {
             totalDebit += entry.comand;
         } else if (entry.amount.toLowerCase() === "i got") {
