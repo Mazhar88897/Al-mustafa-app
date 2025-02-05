@@ -79,8 +79,8 @@ const onPressContinue = async () => {
     console.log('Sending request to create/fetch profile...');
     
     const response = await axios.post('https://khata-backend-express.vercel.app/api/profiles', {
-      // phoneNumber: mobileNumber,
-      phoneNumber:"03328244939"
+      phoneNumber: mobileNumber,
+      // phoneNumber:"03328244939"
       
     });
 
@@ -137,7 +137,7 @@ const handledemo = () =>{console.log(user)}
     e.preventDefault();
 
     // Check if the OTP is correct
-    if (otp === "0000") {
+    if (otp === "0321") {
       setOtpSubmitted(true);
       setError(""); // Clear any previous error
       // alert("OTP is correct! Redirecting...");
