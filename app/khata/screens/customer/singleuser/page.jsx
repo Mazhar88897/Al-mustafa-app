@@ -8,6 +8,7 @@ import {
   DialogContent,
   DialogTitle,
   DialogFooter,
+  DialogHeader,
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { ArrowUp, ArrowDown } from "lucide-react";
@@ -16,7 +17,8 @@ import axios from "axios";
 import emailjs from "emailjs-com";
 export default function TransactionComponent() {
   const [isSending, setIsSending] = useState(false);
-
+  const [openW, setOpenW] = useState(false);
+  const [emailW, setEmailW] = useState("");
   const handleSubmit = async () => {
     // e.preventDefault();
     setIsSending(true);
@@ -33,7 +35,7 @@ export default function TransactionComponent() {
         "template_8juu2oc",
         {
           to_name: data?.name || "Customer",
-          to_email: "mk0906145@gmail.com",
+          to_email: emailW,
           balance: balance,
           debit: totalDebit,
           credit: totalCredit,
@@ -191,18 +193,44 @@ export default function TransactionComponent() {
         </span>
       </div>
 
+      {/* <div className="flex space-x-2"> */}
       <div className="flex space-x-2">
         <Button
-          onClick={() => {
-            handleSubmit();
-            console.log(formattedTransactions);
-          }}
+          onClick={() => setOpenW(true)}
           variant="outline"
           className="flex-1"
         >
           📄 Report
         </Button>
+
+        <Dialog open={openW} onOpenChange={setOpenW}>
+          <DialogContent>
+            <DialogHeader>
+              <DialogTitle>Enter Your Email</DialogTitle>
+            </DialogHeader>
+
+            <Input
+              type="email"
+              placeholder="Enter email"
+              value={emailW}
+              onChange={(e) => setEmailW(e.target.value)}
+            />
+
+            <DialogFooter>
+              <Button
+                onClick={() => {
+                  handleSubmit();
+                  setOpenW(false);
+                  setEmailW("");
+                }}
+              >
+                Send Report
+              </Button>
+            </DialogFooter>
+          </DialogContent>
+        </Dialog>
       </div>
+      {/* </div> */}
 
       {/* Transaction List */}
       <Card className="h-[20rem] overflow-y-auto">

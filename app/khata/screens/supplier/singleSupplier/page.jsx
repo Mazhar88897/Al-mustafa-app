@@ -8,13 +8,16 @@ import {
   DialogContent,
   DialogTitle,
   DialogFooter,
+  DialogHeader,
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { ArrowUp, ArrowDown } from "lucide-react";
 import useGlobalStore from "@/store/zustandStore";
 import axios from "axios";
-
+import emailjs from "emailjs-com";
 export default function TransactionComponent() {
+  const [openW, setOpenW] = useState(false);
+  const [emailW, setEmailW] = useState("");
   const {
     globalData,
     setSupp,
@@ -26,6 +29,41 @@ export default function TransactionComponent() {
     setGlobalData,
     setselectedAccountId,
   } = useGlobalStore();
+
+  const handleSubmit = async () => {
+    // e.preventDefault();
+    // setIsSending(true);
+    const totalDebit = formattedTransactions
+      .filter((txn) => txn.amount.toLowerCase() === "i gave")
+      .reduce((sum, txn) => sum + txn.comand, 0);
+
+    const totalCredit = formattedTransactions
+      .filter((txn) => txn.amount.toLowerCase() === "i got")
+      .reduce((sum, txn) => sum + txn.comand, 0);
+    try {
+      const response = await emailjs.send(
+        "service_20cx135",
+        "template_8juu2oc",
+        {
+          to_name: data?.name || "Customer",
+          to_email: emailW,
+          balance: balance,
+          debit: totalDebit,
+          credit: totalCredit,
+        },
+        "qliBGChgGi1aEpWI_"
+      );
+
+      alert("Email sent successfully!");
+      console.log("Success:", response.status, response.text);
+    } catch (error) {
+      console.error("Failed to send email:", error);
+      alert("Failed to send email. Please try again later.");
+    } finally {
+      // setIsSending(false);
+      console.log(200);
+    }
+  };
 
   useEffect(() => {
     // const fetchAccountData = async () => {
@@ -157,12 +195,39 @@ export default function TransactionComponent() {
 
       <div className="flex space-x-2">
         <Button
-          onClick={() => console.log(formattedTransactions)}
+          onClick={() => setOpenW(true)}
           variant="outline"
           className="flex-1"
         >
           📄 Report
         </Button>
+
+        <Dialog open={openW} onOpenChange={setOpenW}>
+          <DialogContent>
+            <DialogHeader>
+              <DialogTitle>Enter Your Email</DialogTitle>
+            </DialogHeader>
+
+            <Input
+              type="email"
+              placeholder="Enter email"
+              value={emailW}
+              onChange={(e) => setEmailW(e.target.value)}
+            />
+
+            <DialogFooter>
+              <Button
+                onClick={() => {
+                  handleSubmit();
+                  setOpenW(false);
+                  setEmailW("");
+                }}
+              >
+                Send Report
+              </Button>
+            </DialogFooter>
+          </DialogContent>
+        </Dialog>
       </div>
 
       {/* Transaction List */}
