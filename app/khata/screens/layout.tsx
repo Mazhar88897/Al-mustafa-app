@@ -8,7 +8,7 @@ export default function TopBar({
   }) {
   return (
     <div>
-    <div className="flex items-center justify-around text-gray-900 p-4 mt-5 bg-gray-50">
+    <div className="flex items-center justify-around text-gray-900 p-2 mt-5 bg-gray-50">
       {/* Customer Link */}
       <Link href="/khata/screens/customer" className="flex items-center space-x-2 hover:text-gray-300">
         <CustomerIcon className="h-6 w-6" />

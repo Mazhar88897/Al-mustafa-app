@@ -92,6 +92,7 @@ const onPressContinue = async () => {
     if (response.data?.message === 'Profile already exists') {
       console.log('Profile already exists');
       // navigation.navigate('login', { data: response.data });
+      localStorage.setItem("account", response.data.profileId);
       return;
     }
 
@@ -147,6 +148,11 @@ const handledemo = () =>{console.log(user)}
     }
   };
 
+
+
+
+
+
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100 p-4">
       <div className="w-88 space-y-6">
@@ -158,6 +164,7 @@ const handledemo = () =>{console.log(user)}
         ) : (
           // Mobile Number Form
           <form onSubmit={otpSent ? handleOtpSubmit : handleMobileSubmit} className="w-full">
+          {/* <form onSubmit={otpSent ? handleOtpSubmit : handleMobileSubmit} className="w-full"> */}
             <div className="space-y-4">
               <h1 className="text-2xl font-bold text-center">
                 {otpSent ? "Enter OTP" : "Enter Your Mobile Number"}

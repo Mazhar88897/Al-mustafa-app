@@ -9,7 +9,11 @@ const Navbar = ({
   }) => {
   return (
     <div>
-    <nav className="fixed bottom-0 left-0 right-0 bg-black text-white p-4 flex justify-around items-center border-t border-gray-800 z-50">
+      <div className=''>
+        {children}
+    </div>
+      
+      <nav className="fixed bottom-0 left-0 right-0 mt-5 bg-black text-white p-2 flex justify-around items-center border-t border-gray-800 z-50">
     <Link href="/khata/screens/customer" className="flex flex-col items-center gap-1 hover:text-blue-500 transition-colors">
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -46,10 +50,9 @@ const Navbar = ({
       </Link>
       
     </nav>
-    <div>
-        {children}
-    </div>
-    </div>
+      </div>
+    
+ 
   );
 };
 

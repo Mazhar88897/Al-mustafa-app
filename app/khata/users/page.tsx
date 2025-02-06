@@ -12,8 +12,10 @@ import axios from "axios";
 export default function DynamicDropdownScreen() {
     const { user, setUser ,globalData, setGlobalData, setselectedAccountId} = useGlobalStore();
 
-
-   
+    
+    useEffect(() => {
+      getAccountsListByProfileId();
+    }, []);
 
 
 
@@ -21,7 +23,7 @@ export default function DynamicDropdownScreen() {
   const getAccountsListByProfileId = async () => {
     console.log("globalstate",user )
     try {
-      const response = await axios.get(`https://khata-backend-express.vercel.app/api/accounts/by-profile/${user.profileId}`);
+      const response = await axios.get(`https://khata-backend-express.vercel.app/api/accounts/by-profile/${localStorage.getItem("account")}`);
       
       console.log('pak',response.data[0].profileId)
       
@@ -44,7 +46,10 @@ export default function DynamicDropdownScreen() {
 
 
 
-
+  const logAccount = () => {
+    const account = localStorage.getItem("account");
+    console.log("Stored Account ID:", account, options);
+  };
 
 
 
@@ -185,7 +190,7 @@ export default function DynamicDropdownScreen() {
 
         {/* Signout Button */}
         <Button
-          onClick={handleSignOut}
+          onClick={logAccount}
           className="mt-6 w-full flex bg-black text-white  items-center justify-center gap-2"
           variant="outline"
         >

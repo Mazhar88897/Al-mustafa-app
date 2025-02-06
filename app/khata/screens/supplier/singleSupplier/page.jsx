@@ -71,7 +71,9 @@ export default function TransactionComponent() {
       console.log("globalstate", user);
       try {
         const response = await axios.get(
-          `https://khata-backend-express.vercel.app/api/accounts/by-profile/${user.profileId}`
+          `https://khata-backend-express.vercel.app/api/accounts/by-profile/${localStorage.getItem(
+            "account"
+          )}`
         );
 
         console.log("pak", response.data[0].profileId);

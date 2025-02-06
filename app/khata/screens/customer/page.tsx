@@ -48,12 +48,12 @@ export default function CustomerPage() {
       const getAccountsListByProfileId = async () => {
         console.log("globalstate",user )
         try {
-          const response = await axios.get(`https://khata-backend-express.vercel.app/api/accounts/by-profile/${user.profileId}`);
-          
-          console.log('pak',response.data[0].profileId)
-          
+          const response = await axios.get(`https://khata-backend-express.vercel.app/api/accounts/by-profile/${localStorage.getItem("account")}`);
+
+          console.log('pak',response.data[0].profileId);
+
           const accountData = response.data;
-         
+
           // setUserDataContext({ ...userData, accountId: accountData[0] });
           
           console.log("Accounts: total", accountData);  
@@ -281,7 +281,12 @@ type TransactionTotal = {
   comand: number;
 };
 
-const calculateTotal = (transactions: TransactionTotal[]): number => {
+const calculateTotal = (transactions: TransactionTotal[] = []): number => {
+  if (!Array.isArray(transactions)) {
+    console.error("calculateTotal error: transactions is not an array", transactions);
+    return 0; // Default return value if transactions is not an array
+  }
+
   return transactions.reduce((total, transaction) => {
     return transaction.amount.toLowerCase() === "i got"
       ? total + transaction.comand
@@ -333,7 +338,7 @@ const calculateTotal = (transactions: TransactionTotal[]): number => {
         </Dialog>
       </div>
       
-      <div className="space-y-2">
+      <div className="space-y-2 mb-14">
         {customers.filter((c: { name: string; phoneNumber: string | string[]; }) => c.name.toLowerCase().includes(searchTerm) || c.phoneNumber.includes(searchTerm)).map((customer: any) => (
           <Card onClick={()=>{HandleClick(customer)}}  key={customer.phoneNumber} className="p-4 flex justify-between items-center">
             <div>
