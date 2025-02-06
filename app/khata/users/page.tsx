@@ -106,8 +106,10 @@ export default function DynamicDropdownScreen() {
   }, [newUserName ]);
   // Handle signout
   const handleSignOut = () => {
+    localStorage.clear();
+
     router.push("/"); // Redirect to the home page
-    console.log("globalData",globalData)
+    
   };
 
   // Handle dropdown selection
