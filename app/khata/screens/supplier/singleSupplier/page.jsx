@@ -47,7 +47,7 @@ export default function TransactionComponent() {
         {
           to_name: data?.name || "Customer",
           to_email: emailW,
-          balance: balance,
+          balance: totalCredit - totalDebit,
           debit: totalDebit,
           credit: totalCredit,
         },
