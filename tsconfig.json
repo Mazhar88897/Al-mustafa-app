@@ -22,6 +22,6 @@
       "@/*": ["./*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "app/llm/test/page.jsx", "app/khata/screens/customer/singleuser/page.jsx", "app/khata/screens/supplier/singleSupplier/page.jsx"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "app/llm/test/page.jsx", "app/khata/screens/customer/singleuser/page.jsx", "app/khata/screens/supplier/singleSupplier/page.jsx", "app/khata/screens/customer/singleuser/report/report.jsx"],
   "exclude": ["node_modules"]
 }

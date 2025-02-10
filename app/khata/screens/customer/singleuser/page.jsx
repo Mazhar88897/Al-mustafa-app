@@ -15,7 +15,10 @@ import { ArrowUp, ArrowDown } from "lucide-react";
 import useGlobalStore from "@/store/zustandStore";
 import axios from "axios";
 import emailjs from "emailjs-com";
+
+import { useRouter } from "next/navigation";
 export default function TransactionComponent() {
+  const router = useRouter();
   const [isSending, setIsSending] = useState(false);
   const [openW, setOpenW] = useState(false);
   const [emailW, setEmailW] = useState("");
@@ -196,7 +199,10 @@ export default function TransactionComponent() {
       {/* <div className="flex space-x-2"> */}
       <div className="flex space-x-2">
         <Button
-          onClick={() => setOpenW(true)}
+          // onClick={() => setOpenW(true)}
+          onClick={() => {
+            router.push("/khata/screens/customer/singleuser/report");
+          }}
           variant="outline"
           className="flex-1"
         >

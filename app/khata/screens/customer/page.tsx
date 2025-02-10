@@ -262,18 +262,7 @@ type Record = {
     amount: Transaction[];
 };
 
-let totalDebit = 0;
-let totalCredit = 0;
 
-(globalData.customers || [] ).forEach((record: Record) => {
-    (record.amount || []).forEach((entry: Transaction) => {
-        if (entry.amount.toLowerCase() === "i gave") {
-            totalDebit += entry.comand;
-        } else if (entry.amount.toLowerCase() === "i got") {
-            totalCredit += entry.comand;
-        }
-    });
-});
 
 
 type TransactionTotal = {
@@ -294,13 +283,24 @@ const calculateTotal = (transactions: TransactionTotal[] = []): number => {
   }, 0);
 };
 
+let totalDebit= 0;
+let totalCredit = 0;
 
+(customers || []).forEach((record: Record) => {
+    const total = calculateTotal(record.amount || []);
+    if (total > 0) {
+        totalCredit += total
+    } else {
+      totalDebit += total
+    }
+});
   return (
     <div className="p-4">
       {/* <Button onClick={()=>{console.log(AccountId);console.log(globalData.customers);}} className='bg-black'>concole</Button> */}
       <div className="flex justify-between items-center mb-4 p-4 bg-gray-100 rounded-lg">
-        <p className="text-red-500 font-bold">Total Debit: {totalDebit}</p>
-        <p className="text-green-500 font-bold">Total Credit: {totalCredit}</p>
+        <p className="text-red-500 font-bold" onClick={()=> console.log(customers )}>Total Debit: {-1 * totalDebit} </p>
+        <p className="text-green-500 font-bold" onClick={()=> console.log(totalCredit )}>Total Credit: {totalCredit} </p>
+        {/* <p >on click</p> */}
       </div>
       
 
@@ -346,8 +346,11 @@ const calculateTotal = (transactions: TransactionTotal[] = []): number => {
               <p className="text-sm text-gray-500">{customer.phoneNumber}</p>
             </div>
 
-            {}
-            <p className={calculateTotal(customer.amount) < 0 ? 'text-red-500' : 'text-green-500'}>{calculateTotal(customer.amount)}</p>
+            { }
+            <p className={calculateTotal(customer.amount) < 0 ? 'text-red-500' : 'text-green-500'}>
+  {calculateTotal(customer.amount) < 0 ? -calculateTotal(customer.amount) : calculateTotal(customer.amount)}
+</p>
+
           </Card>
         ))}
       </div>
