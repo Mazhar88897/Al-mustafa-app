@@ -192,7 +192,7 @@ export default function DynamicDropdownScreen() {
 
         {/* Signout Button */}
         <Button
-          onClick={logAccount}
+          onClick={handleSignOut}
           className="mt-6 w-full flex bg-black text-white  items-center justify-center gap-2"
           variant="outline"
         >

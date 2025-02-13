@@ -121,29 +121,41 @@ const CustomerReport = () => {
             </tr>
           </thead>
           <tbody>
-            {datax?.amount.map((tx, index) => (
-              <tr key={index} className="border">
-                <td className="p-1 text-sm border">{tx.time.split("T")[0]}</td>
-                <td className="p-1 text-sm border">{tx.itemName || "none"}</td>
-                <td className="p-1 text-sm border">{tx.quantity || 0}</td>
-                <td className="p-1 text-sm border">
-                  {tx.amount === "i gave" ? tx.comand : "0"}
-                </td>
-                <td className="p-1 text-sm border">
-                  {tx.amount === "I got" ? tx.comand : "0" || 0}
-                </td>
-                <td className="p-1 text-sm border">
-                  {tx.comand > 0 ? tx.comand : tx.comand * -1 || 0}
-                </td>
-              </tr>
-            ))}
+            {datax?.amount
+              ?.sort((a, b) => new Date(a.time) - new Date(b.time))
+              .map((tx, index) => (
+                <tr key={index} className="border">
+                  <td className="p-1 text-sm border">
+                    {tx.time.split("T")[0]}
+                  </td>
+                  <td className="p-1 text-sm border">
+                    {tx.itemName || "none"}
+                  </td>
+                  <td className="p-1 text-sm border">{tx.quantity || 0}</td>
+                  <td className="p-1 text-sm border">
+                    {tx.amount === "i gave" ? tx.comand : "0"}
+                  </td>
+                  <td className="p-1 text-sm border">
+                    {tx.amount === "I got" ? tx.comand : "0" || 0}
+                  </td>
+                  <td className="p-1 text-sm border">
+                    {tx.comand > 0 ? tx.comand : tx.comand * -1 || 0}
+                  </td>
+                </tr>
+              ))}
           </tbody>
         </table>
 
         <div className="mt-4 text-sm ml-2 font-bold">
           <p>Grand Total Debit: {totalDebit}</p>
           <p>Grand Total Credit: {totalCredit}</p>
-          <p>Balance: {balance}</p>
+          <p
+            onClick={() => {
+              console.log(datax.amount);
+            }}
+          >
+            Balance: {balance}
+          </p>
         </div>
       </div>
     </div>
