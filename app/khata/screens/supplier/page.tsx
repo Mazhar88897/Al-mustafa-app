@@ -278,18 +278,23 @@ let totalCredit = 0;
       </div>
       
       <div className="space-y-2 mb-14">
-        {customers.filter((c: { name: string; phoneNumber: string | string[]; }) => c.name.toLowerCase().includes(searchTerm) || c.phoneNumber.includes(searchTerm)).map((customer: any) => (
-          <Card onClick={()=>{HandleClick(customer)}}  key={customer.phoneNumber} className="p-4 flex justify-between items-center">
-            <div>
-              <p className="font-bold">{customer.name}</p>
-              <p className="text-sm text-gray-500">{customer.phoneNumber}</p>
-            </div>
+      {customers
+  .filter((c: { name: string; phoneNumber: string | string[] }) => 
+    c.name.toLowerCase().includes(searchTerm.toLowerCase()))
+  .sort((a: {name: string}, b: {name: string}) => a.name.localeCompare(b.name)) // Sorting customers by name
+  .map((customer: any) => (
+    <Card onClick={() => HandleClick(customer)} key={customer.phoneNumber} className="p-4 flex justify-between items-center">
+      <div>
+        <p className="font-bold">{customer.name}</p>
+        <p className="text-sm text-gray-500">{customer.phoneNumber}</p>
+      </div>
+      <p className={calculateTotal(customer.amount) < 0 ? 'text-red-500' : 'text-green-500'}>
+        {calculateTotal(customer.amount) < 0 ? -calculateTotal(customer.amount) : calculateTotal(customer.amount)}
+      </p>
+    </Card>
+  ))
+}
 
-
-            <p className={calculateTotal(customer.amount) < 0 ? 'text-red-500' : 'text-green-500'}>
-  {calculateTotal(customer.amount) < 0 ? -calculateTotal(customer.amount) : calculateTotal(customer.amount)}
-</p>    </Card>
-        ))}
       </div>
     </div>
   );
